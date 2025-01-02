@@ -71,7 +71,7 @@ class SupportResult(BaseModel):
     
 
 support_agent = Agent(
-    "ollama:mistral",
+    "openai:gpt-4o",
     deps_type=SupportDependencies,
     result_type=SupportResult,
     system_prompt=(
@@ -107,7 +107,7 @@ async def block_card(ctx: RunContext[SupportDependencies], include_pending: bool
     return True
 
 
-deps = SupportDependencies(customer_id=123, db=DatabaseConn())
+deps = SupportDependencies(customer_id=456, db=DatabaseConn())
 try:
     result = support_agent.run_sync('What is my balance?', deps=deps)
     print(result.data)
@@ -117,4 +117,4 @@ except UnexpectedModelBehavior:
     print(support_agent.last_run_messages)
     raise
 
-print(DatabaseConn.users)
+print("\n\nafter process: \n",DatabaseConn.users)
